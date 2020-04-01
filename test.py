@@ -1,23 +1,20 @@
-from collections import deque
-from threading import Lock
-from threading import Thread
+def my_test(elems):
+    elems = elems.split(' ')[::-1]
+    print(' '.join(elems))
 
 
-class MyQueue(object):
-    def __init__(self):
-        self.items = deque()
-        self.lock = Lock()
+def my_test_1(elems):
+    tmp = []
+    for i in elems[::-1]:
+        if i == ' ':
+            print(''.join(tmp[::-1]), end=' ')
+            tmp = []
+        else:
+            tmp.append(i)
+    print(''.join(tmp))
 
-    # 注意这里的put不是指上传照片等操作，而是将任务放入双头向队列self.items中
-    # 担任生产者的角色
-    def put(self, item):
-        with self.lock:
-            # 放到双向队列的右边，确保做到fifo先进先出
-            self.items.append(item)
 
-    # 将任务从双向队列中取出
-    # 担任消费者的角色
-    def get(self):
-        with self.lock:
-            # 取出双向队列最左边的元素，确保做到fifo先进先出
-            return self.items.popleft()
+if __name__ == '__main__':
+    test = 'I want to be a Huawei engineer'
+    my_test(test)
+    my_test_1(test)
